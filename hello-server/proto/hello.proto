@@ -1,0 +1,39 @@
+//Proto3语法
+syntax = "proto3";
+
+//.当然目录 service是文件夹
+option go_package = ".;service";
+
+service SayHello{
+  //rpc 服务函数名(参数)返回(返回类型)
+  rpc SayHello(HelloRequest) returns (HelloResponse){}
+}
+message HelloRequest{
+  // string name=2
+  string requestName = 1;
+  // int age=2
+  int32 requestAge = 2;
+  //切片
+  repeated int32 requestNums = 3;
+}
+message HelloResponse{
+  string requestName = 1;
+}
+message PersonInfo{
+  message Person{
+    // string name=2
+    string requestName = 1;
+    // int age=2
+    int32 requestAge = 2;
+    //切片
+    repeated int32 requestNums = 3;
+  }
+}
+message PersonMessage{
+  PersonInfo.Person info=1;
+}
+//go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+//go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+//gopath 设置为bin bin还有gen-grpc.exe
+// protoc --go_out=. hello.proto
+// protoc --go-grpc_out=. hello.proto
